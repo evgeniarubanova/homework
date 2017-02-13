@@ -5,15 +5,22 @@ def open_file():
         text = j.read()
     return text
 
+r_k = r'\b(комар)(ы|е|(а(х|(ми?))?)|о[мв]|у)?\b'
+r_K =  '(Комар)(ы|е|(а((ми?)|х)?)|о[мв]|у)?'
+
 def replace():
     text = open_file()
-    r = re.sub(r'\bКомар\w?\w?\w?', r'Слон', text)
-    text = re.sub(r'\bкомар\w?\w?\w?', r'слон', r)
+    r = re.search(r_k, text)
+    if r:
+        text = re.sub(r.group(1), 'слон', text)
+    r = re.search(r_K, text)
+    if r:
+        text = re.sub(r.group(1), 'Слон', text)
     return text
 
 def writedown():
     text = replace()
-    with open ('note.txt', 'a', encoding = 'utf-8') as j:
+    with open ('note.html', 'a', encoding = 'utf-8') as j:
         j.write(text)
 
 replace()   
